@@ -8,6 +8,7 @@ export default {
     extend: {
       width: {
         mobWidth: "90%",
+        searchInput: "80%",
         toggleCircle: "14px",
         forCircle: "42px"
       },
@@ -21,9 +22,12 @@ export default {
       colors : {
         hoverColor: "#A445ED",
         toggleBgColor: "#757575",
-        borderRight: "#E9E9E9"
+        borderRight: "#E9E9E9",
+        inputDiv : "#F4F4F4"
       },
-    
+    boxShadow : {
+      listShadow : "0px 5px 30px 0px #0000001A"
+    }
       
     },
   },
