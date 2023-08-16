@@ -9,7 +9,7 @@ function App() {
   const [word, setWord] = useState('cup')
   const [info, setInfo] = useState({
     phonetic: ``,
-    voice: ``
+    voice: []
   })
   const [input, setInput] = useState('')
 
@@ -17,13 +17,19 @@ function App() {
     const getData = async () => {
      try {
        const response = await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
+       
+       const phonetics = response.data[0].phonetics;
+        const nonEmptyPhonetic = phonetics.find(voice => voice.audio !== '');
+
+        console.log(nonEmptyPhonetic.audio);
+       
        setInfo({
         phonetic: response.data[0].phonetic,
-        voice: response.data[0].phonetics.map((som) => {
-          console.log(som.audio);
-        })
+        voice: nonEmptyPhonetic.audio
        })
       console.log(response.data[0]);
+      
+
      } catch (error) {
       
      }
@@ -76,13 +82,25 @@ function App() {
         console.log(input);
         setWord(input)
       }} className=' mr-4' src="/assets/images/icon-search.svg" alt=""/></div>
-      <div>
-        <div>
-          <h1 className='text-2xl font-bold leading-10 tracking-normal text-left text-gray-700 '>{word}</h1>
-          <p>{info.phonetic}</p>
+      <div className='flex justify-between items-center w-mobWidth m-auto mt-9'>
+        <div className=' grid gap-4'>
+          <h1 className='text-4xl font-bold leading-10 tracking-normal text-left text-gray-700 '>{word}</h1>
+          <p className='text-lg font-normal leading-6 tracking-normal text-left text-purple-600'>{info.phonetic}</p>
         </div>
-        <button><img src="/assets/images/icon-play.svg" alt="" /></button>
+        <button><img className=' w-12 h-12' onClick={() => {
+          let audio = new Audio(info.voice)
+          audio.play()
+        }} src="/assets/images/icon-play.svg" alt="" /></button>
       </div>
+
+      
+      <fieldset className="border-t w-mobWidth m-auto mt-7">
+        <legend className=" pr-5  text-lg font-bold leading-5 tracking-normal text-left text-gray-900">noun</legend>
+        <p>Meaning</p>
+        
+      </fieldset>
+   
+      
     </>
   )
 }
