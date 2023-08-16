@@ -19,13 +19,22 @@ function App() {
               }}>
                 <p className=' mr-3'>{currentFont}</p>
                 <img src="/assets/images/icon-arrow-down.svg"/> </div>
-              <ul className={`transition-all ${!isOpen ? 'h-0 opacity-0 overflow-hidden' : 'h-auto opacity-100 overflow-auto'} absolute top-7 left-0 right-0 m-auto duration-500`} >
-                <li>Sans Serif</li>
-                <li>Serif</li>
-                <li>Mono</li>
+              <ul className={`transition-all duration-400 overflow-hidden absolute top-8 right-1 rounded-lg shadow-md w-32 ${!isOpen ? 'h-0' : 'h-37 p-3'}` } >
+                <li onClick={() => {
+                  setCurrentFont('Sans Serif')
+                  setIsOpen(!isOpen)
+                }} className=' hover:text-hoverColor'>Sans Serif</li>
+                <li onClick={() => {
+                  setCurrentFont('Serif')
+                  setIsOpen(!isOpen)
+                }} className=' hover:text-hoverColor'>Serif</li>
+                <li onClick={() => {
+                  setCurrentFont('Mono')
+                  setIsOpen(!isOpen)
+                }} className=' hover:text-hoverColor'>Mono</li>
               </ul>
             </div>
-          
+
           </div>
           <div className=' w-20 flex justify-evenly items-center'>
             <input type="checkbox" />

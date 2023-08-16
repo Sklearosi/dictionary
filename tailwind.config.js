@@ -11,6 +11,9 @@ export default {
       },
       margin : {
         mobMargin: "0 auto"
+      },
+      colors : {
+        hoverColor: "#A445ED"
       }
     },
   },
