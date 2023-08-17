@@ -15,6 +15,7 @@ function App() {
     sourceUrl: "",
   });
   const [input, setInput] = useState("");
+  const [right, setRight] = useState(true)
 
   useEffect(() => {
     console.log(123);
@@ -37,7 +38,10 @@ function App() {
         });
 
         console.log(response.data[0]);
-      } catch (error) {}
+        setRight(true)
+      } catch (error) {
+        setRight(false)
+      }
     };
 
     
@@ -52,7 +56,7 @@ function App() {
           <div className="">
             <div className=" relative">
               <div
-                className="flex justify-between items-center pr-2 border-r-2 border-borderRight "
+                className="cursor-pointer flex justify-between items-center pr-2 border-r-2 border-borderRight "
                 onClick={() => {
                   setIsOpen(!isOpen);
                 }}
@@ -71,7 +75,7 @@ function App() {
                     setIsOpen(!isOpen);
                     document.body.style.fontFamily = "sans-serif"
                   }}
-                  className=" hover:text-hoverColor"
+                  className="cursor-pointer hover:text-hoverColor"
                 >
                   Sans Serif
                 </li>
@@ -81,7 +85,7 @@ function App() {
                     setIsOpen(!isOpen);
                     document.body.style.fontFamily = "serif"
                   }}
-                  className=" hover:text-hoverColor"
+                  className="cursor-pointer hover:text-hoverColor"
                 >
                   Serif
                 </li>
@@ -91,7 +95,7 @@ function App() {
                     setIsOpen(!isOpen);
                     document.body.style.fontFamily = "monospace"
                   }}
-                  className=" hover:text-hoverColor"
+                  className="cursor-pointer hover:text-hoverColor"
                 >
                   Mono
                 </li>
@@ -101,7 +105,7 @@ function App() {
           <div className=" w-20 flex justify-evenly items-center">
             <label
               htmlFor="toggleCheck"
-              className={`relative w-forCircle h-5 ${
+              className={`cursor-pointer relative w-forCircle h-5 ${
                 !isChecked ? "bg-toggleBgColor" : " bg-hoverColor "
               } rounded-xl`}
               onClick={() => {
@@ -155,11 +159,12 @@ function App() {
             console.log(input);
             setWord(input);
           }}
-          className=" mr-4"
+          className="cursor-pointer mr-4"
           src="/assets/images/icon-search.svg"
           alt=""
         />
       </div>
+      {right ? <>
       <div className={`xl:w-8/12 flex justify-between items-center w-mobWidth m-auto mt-9 `}>
         <div className=" grid gap-4">
           <h1 className={`text-4xl font-bold leading-10 tracking-normal text-left text-gray-700 ${isChecked ? 'text-white' : 'text-gray-700'}`}>
@@ -209,8 +214,11 @@ function App() {
             {info.synonyms.map((synonym, inedx) => {
               return (
                 <p
-                  className="text-16 font-bold leading-19 tracking-normal text-left text-purple-500"
+                  className="cursor-pointer text-16 font-bold leading-19 tracking-normal text-left text-purple-500 hover:underline"
                   key={inedx}
+                  onClick={(e) => {
+                    setWord(e.target.textContent)
+                  }}
                 >
                   {synonym}
                 </p>
@@ -256,6 +264,7 @@ function App() {
           />
         </a>
       </div>
+      </> : <div className={`grid items-center justify-center text-center w-mobWidth m-auto mt-16 gap-5 xl:w-8/12`}><p className=" text-4xl">😕</p><p className={`text-2xl font-bold leading-6 text-center ${isChecked ? 'text-white' : ' text-toggleBgColor'} `}>No Definitions Found</p><p className={`text-xl font-normal leading-6 text-center text-toggleBgColor`}>Sorry pal, we couldn't find definitions for the word you were looking for. You can try the search again at later time or head to the web instead.</p></div>}
     </>
   );
 }
