@@ -23,10 +23,12 @@ export default {
         hoverColor: "#A445ED",
         toggleBgColor: "#757575",
         borderRight: "#E9E9E9",
-        inputDiv : "#F4F4F4"
+        inputDiv : "#F4F4F4",
+        darkModeBg: "#1F1F1F"
       },
     boxShadow : {
-      listShadow: "0px 5px 30px 0px #0000001A"
+      listShadow: "0px 5px 30px 0px #0000001A",
+      darkShadow: "0px 5px 30px 0px #A445ED"
     },
     borderWidth : {
       borderWidthOne: '1px'

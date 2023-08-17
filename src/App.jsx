@@ -40,34 +40,36 @@ function App() {
       } catch (error) {}
     };
 
+    
     getData();
   }, [word]);
 
   return (
     <>
-      <div className=" flex justify-between items-center w-mobWidth m-mobMargin mt-4">
+      <div className=" flex justify-between items-center w-mobWidth m-mobMargin mt-4 xl:w-8/12">
         <img className=" w-7 h-8" src="/assets/images/logo.svg" alt="" />
         <div className=" w-48 flex justify-evenly items-center">
           <div className="">
             <div className=" relative">
               <div
-                className="flex justify-between items-center pr-2 border-r-2 border-borderRight"
+                className="flex justify-between items-center pr-2 border-r-2 border-borderRight "
                 onClick={() => {
                   setIsOpen(!isOpen);
                 }}
               >
-                <p className=" mr-3">{currentFont}</p>
-                <img src="/assets/images/icon-arrow-down.svg" />{" "}
+                <p className={` mr-3 ${isChecked ? 'text-white' : null}`}>{currentFont}</p>
+                <img src="/assets/images/icon-arrow-down.svg" />
               </div>
               <ul
                 className={` opacity-100 z-10 transition-all duration-400 overflow-hidden absolute top-8 right-1 rounded-lg shadow-listShadow w-32 ${
                   !isOpen ? "h-0" : "h-37 p-3"
-                }`}
+                } ${isChecked ? 'text-white bg-darkModeBg shadow-darkShadow' : 'bg-white'}`}
               >
                 <li
                   onClick={() => {
                     setCurrentFont("Sans Serif");
                     setIsOpen(!isOpen);
+                    document.body.style.fontFamily = "sans-serif"
                   }}
                   className=" hover:text-hoverColor"
                 >
@@ -77,6 +79,7 @@ function App() {
                   onClick={() => {
                     setCurrentFont("Serif");
                     setIsOpen(!isOpen);
+                    document.body.style.fontFamily = "serif"
                   }}
                   className=" hover:text-hoverColor"
                 >
@@ -86,6 +89,7 @@ function App() {
                   onClick={() => {
                     setCurrentFont("Mono");
                     setIsOpen(!isOpen);
+                    document.body.style.fontFamily = "monospace"
                   }}
                   className=" hover:text-hoverColor"
                 >
@@ -100,6 +104,9 @@ function App() {
               className={`relative w-forCircle h-5 ${
                 !isChecked ? "bg-toggleBgColor" : " bg-hoverColor "
               } rounded-xl`}
+              onClick={() => {
+                document.body.style.backgroundColor = !isChecked ? "#050505" : "white"
+              }}
             >
               <div
                 className={` transition-all duration-300  ${
@@ -135,13 +142,13 @@ function App() {
           </div>
         </div>
       </div>
-      <div className=" bg-inputDiv w-mobWidth h-12 rounded-xl flex justify-between items-center m-auto mt-8">
+      <div className={`xl:w-8/12  w-mobWidth h-12 rounded-xl flex justify-between items-center m-auto mt-8 ${isChecked ? 'bg-darkModeBg' : 'bg-inputDiv'}`}>
         <input
           onChange={(e) => {
             setInput(e.target.value);
           }}
           type="text"
-          className=" w-searchInput ml-4 bg-transparent focus:outline-none"
+          className={` w-searchInput ml-4 bg-transparent focus:outline-none ${isChecked ? 'text-white' : 'text-gray-900'}`}
         />
         <img
           onClick={() => {
@@ -153,9 +160,9 @@ function App() {
           alt=""
         />
       </div>
-      <div className="flex justify-between items-center w-mobWidth m-auto mt-9">
+      <div className={`xl:w-8/12 flex justify-between items-center w-mobWidth m-auto mt-9 `}>
         <div className=" grid gap-4">
-          <h1 className="text-4xl font-bold leading-10 tracking-normal text-left text-gray-700 ">
+          <h1 className={`text-4xl font-bold leading-10 tracking-normal text-left text-gray-700 ${isChecked ? 'text-white' : 'text-gray-700'}`}>
             {word}
           </h1>
           <p className="text-lg font-normal leading-6 tracking-normal text-left text-purple-600">
@@ -175,11 +182,11 @@ function App() {
         </button>
       </div>
 
-      <fieldset className="border-t w-mobWidth m-auto mt-7">
-        <legend className=" pr-5  text-lg font-bold leading-5 tracking-normal text-left text-gray-900">
+      <fieldset className="xl:w-8/12 border-t w-mobWidth m-auto mt-7">
+        <legend className={` pr-5  text-lg font-bold leading-5 tracking-normal text-left text-gray-900 ${isChecked ? 'text-white' : 'text-gray-900'}`}>
           noun
         </legend>
-        <p className="text-base font-normal leading-5 tracking-normal text-left mt-8">
+        <p className="text-base font-normal leading-5 tracking-normal text-left mt-8 text-toggleBgColor">
           Meaning
         </p>
 
@@ -187,7 +194,7 @@ function App() {
           {info.noun.map((noun, index) => (
             <li key={index} className="flex ">
               <div className="w-1 h-1 rounded-full mt-2.5 bg-purple-500"></div>
-              <p className=" w-11/12 ml-5 text-sm font-normal leading-6 tracking-normal text-left text-gray-900">
+              <p className={` w-11/12 ml-5 text-sm font-normal leading-6 tracking-normal text-left text-gray-900 ${isChecked ? 'text-white' : 'text-gray-900'}`}>
                 {noun.definition}
               </p>
             </li>
@@ -196,7 +203,7 @@ function App() {
       </fieldset>
 
       {info.synonyms.length > 0 ? (
-        <div className=" break-words flex items-start gap-3 w-mobWidth m-auto mt-4">
+        <div className="xl:w-8/12 break-words flex items-start gap-3 w-mobWidth m-auto mt-4 text-toggleBgColor">
           <p>Synonyms</p>
           <div className="flex flex-wrap overflow-hidden gap-2">
             {info.synonyms.map((synonym, inedx) => {
@@ -213,11 +220,11 @@ function App() {
         </div>
       ) : null}
 
-      <fieldset className="border-t w-mobWidth m-auto mt-7">
-        <legend className=" pr-5  text-lg font-bold leading-5 tracking-normal text-left text-gray-900">
+      <fieldset className="xl:w-8/12 border-t w-mobWidth m-auto mt-7">
+        <legend className={` pr-5  text-lg font-bold leading-5 tracking-normal text-left text-gray-900 ${isChecked ? 'text-white' : 'text-gray-900'}`}>
           verb
         </legend>
-        <p className="text-base font-normal leading-5 tracking-normal text-left mt-8">
+        <p className="text-base font-normal leading-5 tracking-normal text-left mt-8 text-toggleBgColor">
           Meaning
         </p>
 
@@ -225,7 +232,7 @@ function App() {
           {info.verb.map((verb, index) => (
             <li key={index} className="flex ">
               <div className="w-1 h-1 rounded-full mt-2.5 bg-purple-500"></div>
-              <p className=" w-11/12 ml-5 text-sm font-normal leading-6 tracking-normal text-left text-gray-900">
+              <p className={` w-11/12 ml-5 text-sm font-normal leading-6 tracking-normal text-left text-gray-900 ${isChecked ? 'text-white' : 'text-gray-900'}`}>
                 {verb.definition}
               </p>
             </li>
@@ -233,12 +240,12 @@ function App() {
         </ul>
       </fieldset>
 
-      <div className=" w-mobWidth m-auto mt-6 border-t-borderWidthOne pt-4 pb-8">
-        <p className="text-sm font-normal leading-5 tracking-normal text-left text-gray-600">
+      <div className="xl:w-8/12 w-mobWidth m-auto mt-6 border-t-borderWidthOne pt-4 pb-8">
+        <p className="text-sm font-normal leading-5 tracking-normal text-lef text-toggleBgColor">
           Source
         </p>
         <a target="_blank"
-          className="flex text-sm font-normal leading-5 tracking-normal text-left text-gray-900 items-center"
+          className={`flex text-sm font-normal leading-5 tracking-normal text-left text-gray-900 items-center ${isChecked ? 'text-white' : 'text-gray-900'}`}
           href={info.sourceUrl}
         >
           {info.sourceUrl}
