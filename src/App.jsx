@@ -9,7 +9,11 @@ function App() {
   const [word, setWord] = useState('cup')
   const [info, setInfo] = useState({
     phonetic: ``,
-    voice: []
+    voice: [],
+    noun: [],
+    verb: [],
+    synonyms: [],
+    sourceUrl: ''
   })
   const [input, setInput] = useState('')
 
@@ -21,12 +25,17 @@ function App() {
        const phonetics = response.data[0].phonetics;
         const nonEmptyPhonetic = phonetics.find(voice => voice.audio !== '');
 
-        console.log(nonEmptyPhonetic.audio);
+       
        
        setInfo({
         phonetic: response.data[0].phonetic,
-        voice: nonEmptyPhonetic.audio
+        voice: nonEmptyPhonetic.audio,
+        noun: response.data[0].meanings[0].definitions,
+        verb : response.data[0].meanings[1].definitions,
+        synonyms: response.data[0].meanings[0].synonyms,
+        sourceUrl: response.data[0].sourceUrls[0]
        })
+       
       console.log(response.data[0]);
       
 
@@ -96,10 +105,40 @@ function App() {
       
       <fieldset className="border-t w-mobWidth m-auto mt-7">
         <legend className=" pr-5  text-lg font-bold leading-5 tracking-normal text-left text-gray-900">noun</legend>
-        <p>Meaning</p>
-        
+        <p className='text-base font-normal leading-5 tracking-normal text-left mt-8'>Meaning</p>
+
+        <ul  className='  mt-4 grid gap-2'>
+        {info.noun.map((noun, index) => (
+    <li key={index} className='flex '>
+      <div className='w-1 h-1 rounded-full mt-2.5 bg-purple-500'></div>
+      <p className=' w-11/12 ml-5 text-sm font-normal leading-6 tracking-normal text-left text-gray-900'>{noun.definition}</p>
+    </li>
+  ))}
+        </ul>
+
       </fieldset>
-   
+
+      {info.synonyms.length > 0 ? <div className=' break-words flex items-center w-mobWidth m-auto mt-4'><p>Synonyms</p></div> : null}
+
+      <fieldset className="border-t w-mobWidth m-auto mt-7">
+        <legend className=" pr-5  text-lg font-bold leading-5 tracking-normal text-left text-gray-900">verb</legend>
+        <p className='text-base font-normal leading-5 tracking-normal text-left mt-8'>Meaning</p>
+
+        <ul  className='  mt-4 grid gap-2'>
+        {info.verb.map((verb, index) => (
+    <li key={index} className='flex '>
+      <div className='w-1 h-1 rounded-full mt-2.5 bg-purple-500'></div>
+      <p className=' w-11/12 ml-5 text-sm font-normal leading-6 tracking-normal text-left text-gray-900'>{verb.definition}</p>
+    </li>
+  ))}
+        </ul>
+
+      </fieldset>
+          
+          <div className=' w-mobWidth m-auto mt-6 border-t-borderWidthOne pt-4 pb-8'>
+            <p className='text-sm font-normal leading-5 tracking-normal text-left text-gray-600'>Source</p>
+            <a className='flex text-sm font-normal leading-5 tracking-normal text-left text-gray-900 items-center' href={info.sourceUrl}>{info.sourceUrl} <img className='ml-2 w-3 h-3' src="/assets/images/icon-new-window.svg" alt="" /></a>
+          </div>
       
     </>
   )

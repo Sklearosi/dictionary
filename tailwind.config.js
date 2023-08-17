@@ -26,7 +26,10 @@ export default {
         inputDiv : "#F4F4F4"
       },
     boxShadow : {
-      listShadow : "0px 5px 30px 0px #0000001A"
+      listShadow: "0px 5px 30px 0px #0000001A"
+    },
+    borderWidth : {
+      borderWidthOne: '1px'
     }
       
     },
